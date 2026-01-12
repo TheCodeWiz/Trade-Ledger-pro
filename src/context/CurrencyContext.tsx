@@ -14,13 +14,16 @@ interface CurrencyContextType {
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
 export function CurrencyProvider({ children }: { children: ReactNode }) {
-  const [currency, setCurrencyState] = useState<Currency>('USD');
+  const [currency, setCurrencyState] = useState<Currency>('INR');
 
   useEffect(() => {
-    // Load saved currency preference
+    // Load saved currency preference - default to INR
     const saved = localStorage.getItem('tradePulse_currency') as Currency;
     if (saved && (saved === 'USD' || saved === 'INR')) {
       setCurrencyState(saved);
+    } else {
+      // Set INR as default if no preference saved
+      localStorage.setItem('tradePulse_currency', 'INR');
     }
   }, []);
 
@@ -29,11 +32,13 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('tradePulse_currency', newCurrency);
   };
 
-  const symbol = currency === 'USD' ? '$' : '₹';
+  // Always use Indian Rupee symbol
+  const symbol = '₹';
 
   const formatAmount = (amount: number | null): string => {
     if (amount === null) return '-';
-    const formatted = amount.toLocaleString(currency === 'USD' ? 'en-US' : 'en-IN', {
+    // Always format as Indian locale with Rupee symbol
+    const formatted = amount.toLocaleString('en-IN', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });

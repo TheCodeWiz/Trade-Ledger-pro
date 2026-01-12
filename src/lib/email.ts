@@ -55,7 +55,8 @@ export async function sendWeeklyReportEmail(email: string, data: WeeklyReportDat
     if (!transport) return false;
 
     const formatCurrency = (amount: number) => {
-      const symbol = data.currency === 'INR' ? '₹' : '$';
+      // Always use Indian Rupee symbol
+      const symbol = '₹';
       return `${amount >= 0 ? '+' : ''}${symbol}${Math.abs(amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     };
 
@@ -181,7 +182,8 @@ export async function sendGoalAlertEmail(
     if (!transport) return false;
 
     const formatCurrency = (amount: number) => {
-      const symbol = currency === 'INR' ? '₹' : '$';
+      // Always use Indian Rupee symbol
+      const symbol = '₹';
       return `${symbol}${Math.abs(amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     };
 
