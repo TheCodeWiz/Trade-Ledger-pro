@@ -41,7 +41,7 @@ export async function sendWeeklyReportEmail(email: string, data: WeeklyReportDat
     };
 
     await getTransporter().sendMail({
-      from: `"Trade Book" <${process.env.EMAIL_USER}>`,
+      from: `"Trade Ledger Pro" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: `📊 Your Weekly Trading Report - ${data.weekStart} to ${data.weekEnd}`,
       html: `
@@ -76,7 +76,7 @@ export async function sendWeeklyReportEmail(email: string, data: WeeklyReportDat
         <body>
           <div class="container">
             <div class="header">
-              <h1>📈 Trade Book</h1>
+              <h1>📈 Trade Ledger Pro</h1>
               <p>Weekly Performance Report</p>
             </div>
             
@@ -127,7 +127,7 @@ export async function sendWeeklyReportEmail(email: string, data: WeeklyReportDat
             
             <div class="footer">
               <p>Keep journaling your trades to improve your performance! 🚀</p>
-              <p>© 2026 Trade Book. All rights reserved.</p>
+              <p>© 2026 Trade Ledger Pro. All rights reserved.</p>
               <p style="margin-top: 10px;">You received this email because you enabled weekly reports. <br/>You can disable them in your notification settings.</p>
             </div>
           </div>
@@ -162,7 +162,7 @@ export async function sendGoalAlertEmail(
     const targetDisplay = isWinRate ? `${targetValue}%` : formatCurrency(targetValue);
 
     await getTransporter().sendMail({
-      from: `"Trade Book" <${process.env.EMAIL_USER}>`,
+      from: `"Trade Ledger Pro" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: `🎯 Goal Alert: You've reached ${percentage}% of your ${goalType} target!`,
       html: `
@@ -185,7 +185,7 @@ export async function sendGoalAlertEmail(
         <body>
           <div class="container">
             <div class="header">
-              <h1>📈 Trade Book</h1>
+              <h1>📈 Trade Ledger Pro</h1>
             </div>
             <div class="celebration">${percentage >= 100 ? '🎉🏆🎉' : percentage >= 75 ? '🔥' : '💪'}</div>
             <h2 style="text-align: center; color: white;">${percentage >= 100 ? 'Congratulations!' : 'Great Progress!'}</h2>
@@ -207,7 +207,7 @@ export async function sendGoalAlertEmail(
                 : `Keep going, you're doing great!`}
             </p>
             <div class="footer">
-              <p>© 2026 Trade Book. All rights reserved.</p>
+              <p>© 2026 Trade Ledger Pro. All rights reserved.</p>
             </div>
           </div>
         </body>
@@ -224,9 +224,9 @@ export async function sendGoalAlertEmail(
 export async function sendOTPEmail(email: string, otp: string, name: string): Promise<boolean> {
   try {
     await getTransporter().sendMail({
-      from: `"Trade Book" <${process.env.EMAIL_USER}>`,
+      from: `"Trade Ledger Pro" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Your Trade Book Verification Code',
+      subject: 'Your Trade Ledger Pro Verification Code',
       html: `
         <!DOCTYPE html>
         <html>
@@ -245,15 +245,15 @@ export async function sendOTPEmail(email: string, otp: string, name: string): Pr
         <body>
           <div class="container">
             <div class="header">
-              <h1>📈 Trade Book</h1>
+              <h1>📈 Trade Ledger Pro</h1>
             </div>
             <p class="message">Hello ${name},</p>
-            <p class="message">Your verification code for Trade Book is:</p>
+            <p class="message">Your verification code for Trade Ledger Pro is:</p>
             <div class="otp-box">${otp}</div>
             <p class="message">Enter this code to complete your login.</p>
             <p class="warning">⏰ This code will expire in 5 minutes. Do not share this code with anyone.</p>
             <div class="footer">
-              <p>© 2026 Trade Book. All rights reserved.</p>
+              <p>© 2026 Trade Ledger Pro. All rights reserved.</p>
             </div>
           </div>
         </body>
@@ -273,7 +273,7 @@ export async function sendOTPSMS(phone: string, otp: string): Promise<boolean> {
     // In production, integrate with Twilio or similar service
     // const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     // await client.messages.create({
-    //   body: `Your Trade Book verification code is: ${otp}. Valid for 5 minutes.`,
+    //   body: `Your Trade Ledger Pro verification code is: ${otp}. Valid for 5 minutes.`,
     //   from: process.env.TWILIO_PHONE_NUMBER,
     //   to: phone
     // });

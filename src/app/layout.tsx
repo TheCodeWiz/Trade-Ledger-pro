@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Trade Book - Trading Journal",
+  title: "Trade Ledger Pro - Trading Journal",
   description: "Your personal trading journal to track and analyze your trades",
 };
 

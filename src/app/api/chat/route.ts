@@ -174,7 +174,7 @@ function buildSystemPrompt(
   // Get starred trades
   const starredTrades = trades.filter(t => t.isStarred);
 
-  return `You are Trade Book AI, an intelligent trading assistant for a personal trading journal application. You help traders analyze their performance, track their progress, and provide insights based on their trading data.
+  return `You are Trade Ledger Pro AI, an intelligent trading assistant for a personal trading journal application. You help traders analyze their performance, track their progress, and provide insights based on their trading data.
 
 Current Date: ${currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
 

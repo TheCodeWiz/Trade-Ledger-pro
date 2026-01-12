@@ -13,7 +13,7 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <h1 className="text-2xl font-bold text-white tracking-tight">Trade Book</h1>
+              <h1 className="text-2xl font-bold text-white tracking-tight">Trade Ledger Pro</h1>
             </div>
             <div className="flex items-center gap-3">
               <Link
@@ -133,7 +133,7 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <span>Trade Book © 2026</span>
+              <span>Trade Ledger Pro © 2026</span>
             </div>
             <p className="text-gray-500 text-sm">
               Built for traders, by trader.

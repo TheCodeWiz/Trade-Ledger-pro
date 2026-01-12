@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://img.icons8.com/fluency/96/combo-chart.png" alt="Trade Book Logo" width="80" height="80"/>
+  <img src="https://img.icons8.com/fluency/96/combo-chart.png" alt="Trade Ledger Pro Logo" width="80" height="80"/>
 </p>
 
-<h1 align="center">📈 Trade Book</h1>
+<h1 align="center">📈 Trade Ledger Pro</h1>
 
 <p align="center">
   <strong>Your Intelligent Trading Journal & Analytics Platform</strong>
@@ -32,7 +32,7 @@
 
 ## 🎯 Overview
 
-**Trade Book** is a comprehensive, AI-powered trading journal designed to help traders track, analyze, and improve their trading performance. Whether you're a day trader, swing trader, or long-term investor, Trade Book provides the insights you need to become a more disciplined and profitable trader.
+**Trade Ledger Pro** is a comprehensive, AI-powered trading journal designed to help traders track, analyze, and improve their trading performance. Whether you're a day trader, swing trader, or long-term investor, Trade Ledger Pro provides the insights you need to become a more disciplined and profitable trader.
 
 > *"The goal of a successful trader is to make the best trades. Money is secondary."* — Alexander Elder
 

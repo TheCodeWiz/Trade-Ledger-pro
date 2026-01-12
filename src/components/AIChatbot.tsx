@@ -170,7 +170,7 @@ export default function AIChatbot() {
     {
       id: 'welcome',
       role: 'assistant',
-      content: 'Hello! I\'m Trade Book AI, your intelligent trading assistant. I can help you analyze your trading performance, fetch trade details for specific dates or months, provide insights from your analytics, goals, learning center, and notifications. What would you like to know?',
+      content: 'Hello! I\'m Trade Ledger Pro AI, your intelligent trading assistant. I can help you analyze your trading performance, fetch trade details for specific dates or months, provide insights from your analytics, goals, learning center, and notifications. What would you like to know?',
       timestamp: new Date(),
     },
   ]);
@@ -329,7 +329,7 @@ export default function AIChatbot() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-white font-semibold text-sm">Trade Book AI</h3>
+                <h3 className="text-white font-semibold text-sm">Trade Ledger Pro AI</h3>
                 <p className="text-xs text-gray-400">Your trading assistant</p>
               </div>
             </div>

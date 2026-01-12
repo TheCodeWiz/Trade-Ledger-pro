@@ -172,7 +172,7 @@ export default function LoginPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Trade Book</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Trade Ledger Pro</h1>
           <p className="text-gray-400">
             {step === 'credentials' ? 'Welcome back!' : 'Enter verification code'}
           </p>
