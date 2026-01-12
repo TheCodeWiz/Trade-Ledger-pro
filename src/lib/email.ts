@@ -1,14 +1,22 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.EMAIL_PORT || '587'),
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// Lazy initialization to avoid build-time errors
+let transporter: nodemailer.Transporter | null = null;
+
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.EMAIL_PORT || '587'),
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+  }
+  return transporter;
+}
 
 interface WeeklyReportData {
   name: string;
@@ -32,7 +40,7 @@ export async function sendWeeklyReportEmail(email: string, data: WeeklyReportDat
       return `${amount >= 0 ? '+' : ''}${symbol}${Math.abs(amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     };
 
-    await transporter.sendMail({
+    await getTransporter().sendMail({
       from: `"Trade Book" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: `📊 Your Weekly Trading Report - ${data.weekStart} to ${data.weekEnd}`,
@@ -153,7 +161,7 @@ export async function sendGoalAlertEmail(
     const currentDisplay = isWinRate ? `${currentValue.toFixed(1)}%` : formatCurrency(currentValue);
     const targetDisplay = isWinRate ? `${targetValue}%` : formatCurrency(targetValue);
 
-    await transporter.sendMail({
+    await getTransporter().sendMail({
       from: `"Trade Book" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: `🎯 Goal Alert: You've reached ${percentage}% of your ${goalType} target!`,
@@ -215,7 +223,7 @@ export async function sendGoalAlertEmail(
 
 export async function sendOTPEmail(email: string, otp: string, name: string): Promise<boolean> {
   try {
-    await transporter.sendMail({
+    await getTransporter().sendMail({
       from: `"Trade Book" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: 'Your Trade Book Verification Code',
