@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
 interface DatePickerProps {
@@ -14,7 +14,6 @@ interface DatePickerProps {
 interface DropdownPosition {
   top: number;
   left: number;
-  openUpward: boolean;
 }
 
 export default function DatePicker({
@@ -27,32 +26,97 @@ export default function DatePicker({
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>({ top: 0, left: 0, openUpward: false });
+  const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>({ top: 0, left: 0 });
   const [isMounted, setIsMounted] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   // Ensure portal only renders on client
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Calculate dropdown position
+  // Calculate initial dropdown position - centered on mobile, near input on desktop
   useEffect(() => {
     if (isCalendarOpen && inputRef.current) {
       const rect = inputRef.current.getBoundingClientRect();
-      const calendarHeight = 360; // Approximate height of calendar
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      const openUpward = spaceBelow < calendarHeight && spaceAbove > spaceBelow;
-
-      setDropdownPosition({
-        top: openUpward ? rect.top - calendarHeight - 8 + window.scrollY : rect.bottom + 8 + window.scrollY,
-        left: rect.left + window.scrollX,
-        openUpward,
-      });
+      const calendarWidth = 288; // w-72 = 18rem = 288px
+      const calendarHeight = 360;
+      const isMobile = window.innerWidth < 640;
+      
+      if (isMobile) {
+        // Center on screen for mobile
+        setDropdownPosition({
+          top: Math.max(20, (window.innerHeight - calendarHeight) / 2),
+          left: Math.max(10, (window.innerWidth - calendarWidth) / 2),
+        });
+      } else {
+        // Position near input for desktop
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const openUpward = spaceBelow < calendarHeight && rect.top > spaceBelow;
+        
+        setDropdownPosition({
+          top: openUpward ? Math.max(10, rect.top - calendarHeight - 8) : rect.bottom + 8,
+          left: Math.min(rect.left, window.innerWidth - calendarWidth - 10),
+        });
+      }
     }
   }, [isCalendarOpen]);
+
+  // Handle drag start
+  const handleDragStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+    
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    setDragOffset({
+      x: clientX - dropdownPosition.left,
+      y: clientY - dropdownPosition.top,
+    });
+  }, [dropdownPosition]);
+
+  // Handle drag move
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMove = (e: MouseEvent | TouchEvent) => {
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+      
+      const calendarWidth = 288;
+      const calendarHeight = 360;
+      
+      // Keep calendar within viewport bounds
+      const newLeft = Math.max(0, Math.min(clientX - dragOffset.x, window.innerWidth - calendarWidth));
+      const newTop = Math.max(0, Math.min(clientY - dragOffset.y, window.innerHeight - calendarHeight));
+      
+      setDropdownPosition({
+        top: newTop,
+        left: newLeft,
+      });
+    };
+
+    const handleEnd = () => {
+      setIsDragging(false);
+    };
+
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('mouseup', handleEnd);
+    document.addEventListener('touchmove', handleMove, { passive: false });
+    document.addEventListener('touchend', handleEnd);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMove);
+      document.removeEventListener('mouseup', handleEnd);
+      document.removeEventListener('touchmove', handleMove);
+      document.removeEventListener('touchend', handleEnd);
+    };
+  }, [isDragging, dragOffset]);
 
   // Sync input value with prop value
   useEffect(() => {
@@ -220,19 +284,44 @@ export default function DatePicker({
       {/* Calendar Dropdown - Rendered via Portal */}
       {isCalendarOpen && isMounted && createPortal(
         <div 
+          ref={calendarRef}
           id="datepicker-calendar"
-          className="fixed z-[9999] w-72 bg-gray-900 border border-gray-700 rounded-xl shadow-2xl shadow-black/50 overflow-hidden animate-slideDown"
+          className="fixed z-[9999] w-72 bg-gray-900 border border-gray-700 rounded-xl shadow-2xl shadow-black/50 overflow-hidden"
           style={{
             top: dropdownPosition.top,
             left: dropdownPosition.left,
+            cursor: isDragging ? 'grabbing' : 'default',
           }}
         >
+          {/* Draggable Handle */}
+          <div 
+            className="flex items-center justify-between px-3 py-2 bg-gray-800 border-b border-gray-700 cursor-grab active:cursor-grabbing touch-none select-none"
+            onMouseDown={handleDragStart}
+            onTouchStart={handleDragStart}
+          >
+            <div className="flex items-center gap-2 text-gray-400 text-xs">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
+              </svg>
+              <span>Drag to move</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsCalendarOpen(false)}
+              className="p-1 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
           {/* Calendar Header */}
           <div className="flex items-center justify-between p-3 bg-gray-800/50 border-b border-gray-700">
             <button
               type="button"
               onClick={goToPrevMonth}
-              className="p-1.5 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
+              className="p-1.5 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white touch-manipulation"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -244,7 +333,7 @@ export default function DatePicker({
             <button
               type="button"
               onClick={goToNextMonth}
-              className="p-1.5 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
+              className="p-1.5 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white touch-manipulation"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -277,12 +366,12 @@ export default function DatePicker({
                   type="button"
                   onClick={() => handleDateSelect(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day))}
                   className={`
-                    aspect-square flex items-center justify-center text-sm rounded-lg transition-all
+                    aspect-square flex items-center justify-center text-sm rounded-lg transition-all touch-manipulation
                     ${isSelected(day)
                       ? 'bg-emerald-500 text-white font-semibold'
                       : isToday(day)
                       ? 'bg-gray-700 text-emerald-400 font-semibold ring-1 ring-emerald-500'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white active:bg-gray-600'
                     }
                   `}
                 >
@@ -297,7 +386,7 @@ export default function DatePicker({
             <button
               type="button"
               onClick={goToToday}
-              className="w-full py-2 text-sm text-emerald-400 hover:text-emerald-300 hover:bg-gray-700 rounded-lg transition-colors font-medium"
+              className="w-full py-2 text-sm text-emerald-400 hover:text-emerald-300 hover:bg-gray-700 active:bg-gray-600 rounded-lg transition-colors font-medium touch-manipulation"
             >
               Today
             </button>
