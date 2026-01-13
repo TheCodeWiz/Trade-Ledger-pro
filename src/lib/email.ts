@@ -142,7 +142,7 @@ export async function sendWeeklyReportEmail(email: string, data: WeeklyReportDat
             ` : ''}
             
             <div style="text-align: center;">
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard" class="cta-button">View Full Analytics →</a>
+              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://tradeledgerpro.vercel.app/'}/dashboard" class="cta-button">View Full Analytics →</a>
             </div>
             
             <div class="footer">
