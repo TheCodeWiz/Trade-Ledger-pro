@@ -19,6 +19,7 @@ interface Trade {
   id: string;
   symbol: string;
   tradeType: string;
+  instrumentType: string;
   entryPrice: number;
   exitPrice: number | null;
   quantity: number;
@@ -228,21 +229,21 @@ function DashboardContent() {
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
       {/* Header */}
       <header className="bg-gray-900/80 backdrop-blur-xl border-b border-gray-800 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <h1 className="text-2xl font-bold text-white tracking-tight">Trade Ledger Pro</h1>
+              <h1 className="text-lg sm:text-2xl font-bold text-white tracking-tight">Trade Ledger Pro</h1>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-gray-400 hidden sm:block">Welcome, <span className="text-white font-medium">{user?.name}</span></span>
+            <div className="flex items-center gap-2 sm:gap-4">
+              <span className="text-gray-400 hidden md:block">Welcome, <span className="text-white font-medium">{user?.name}</span></span>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white rounded-xl transition-all duration-200 text-sm font-medium border border-gray-700"
+                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white rounded-xl transition-all duration-200 text-xs sm:text-sm font-medium border border-gray-700"
               >
                 Logout
               </button>
@@ -252,109 +253,109 @@ function DashboardContent() {
       </header>
 
       {/* Tab Navigation */}
-      <div className="bg-gray-900/50 border-b border-gray-800 overflow-x-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-1">
+      <div className="bg-gray-900/50 border-b border-gray-800 overflow-x-auto scrollbar-hide">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-0.5 sm:gap-1">
             <button
               onClick={() => setActiveTab('dashboard')}
-              className={`px-4 py-4 text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
+              className={`px-2.5 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
                 activeTab === 'dashboard'
                   ? 'text-emerald-400 border-emerald-400'
                   : 'text-gray-400 border-transparent hover:text-white hover:border-gray-600'
               }`}
             >
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="flex items-center gap-1.5 sm:gap-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                 </svg>
-                Dashboard
+                <span className="hidden sm:inline">Dashboard</span>
               </span>
             </button>
             <button
               onClick={() => setActiveTab('calendar')}
-              className={`px-4 py-4 text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
+              className={`px-2.5 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
                 activeTab === 'calendar'
                   ? 'text-emerald-400 border-emerald-400'
                   : 'text-gray-400 border-transparent hover:text-white hover:border-gray-600'
               }`}
             >
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="flex items-center gap-1.5 sm:gap-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Calendar
+                <span className="hidden sm:inline">Calendar</span>
               </span>
             </button>
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`px-4 py-4 text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
+              className={`px-2.5 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
                 activeTab === 'analytics'
                   ? 'text-emerald-400 border-emerald-400'
                   : 'text-gray-400 border-transparent hover:text-white hover:border-gray-600'
               }`}
             >
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="flex items-center gap-1.5 sm:gap-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-                Analytics
+                <span className="hidden sm:inline">Analytics</span>
               </span>
             </button>
             <button
               onClick={() => setActiveTab('goals')}
-              className={`px-4 py-4 text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
+              className={`px-2.5 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
                 activeTab === 'goals'
                   ? 'text-emerald-400 border-emerald-400'
                   : 'text-gray-400 border-transparent hover:text-white hover:border-gray-600'
               }`}
             >
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="flex items-center gap-1.5 sm:gap-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
-                Goals
+                <span className="hidden sm:inline">Goals</span>
               </span>
             </button>
             <button
               onClick={() => setActiveTab('learning')}
-              className={`px-4 py-4 text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
+              className={`px-2.5 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
                 activeTab === 'learning'
                   ? 'text-emerald-400 border-emerald-400'
                   : 'text-gray-400 border-transparent hover:text-white hover:border-gray-600'
               }`}
             >
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="flex items-center gap-1.5 sm:gap-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
-                Learning
+                <span className="hidden sm:inline">Learning</span>
               </span>
             </button>
             <button
               onClick={() => setActiveTab('notifications')}
-              className={`px-4 py-4 text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
+              className={`px-2.5 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
                 activeTab === 'notifications'
                   ? 'text-emerald-400 border-emerald-400'
                   : 'text-gray-400 border-transparent hover:text-white hover:border-gray-600'
               }`}
             >
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span className="flex items-center gap-1.5 sm:gap-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
-                Notifications
+                <span className="hidden sm:inline">Notifications</span>
               </span>
             </button>
           </div>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Dashboard Tab Content */}
         {activeTab === 'dashboard' && (
           <>
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mb-6 sm:mb-8">
               <StatsCard
                 title="Total Trades"
                 value={totalTrades.toString()}
@@ -381,9 +382,9 @@ function DashboardContent() {
             </div>
 
             {/* Filters and Add Button */}
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-6 p-4 bg-gray-900/50 rounded-2xl border border-gray-800">
-              <div className="flex flex-wrap items-end gap-4">
-                <div className="w-48">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-end justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-900/50 rounded-2xl border border-gray-800">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-end gap-3 sm:gap-4">
+                <div className="w-full sm:w-48">
                   <DatePicker
                     value={selectedDate}
                     onChange={setSelectedDate}
@@ -391,12 +392,12 @@ function DashboardContent() {
                     placeholder="Select date..."
                   />
                 </div>
-                <div>
-                  <label className="block text-sm text-gray-400 mb-1">Filter by Status</label>
+                <div className="w-full sm:w-auto">
+                  <label className="block text-xs sm:text-sm text-gray-400 mb-1">Filter by Status</label>
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    className="px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+                    className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm"
                   >
                     <option value="" className="bg-gray-900">All</option>
                     <option value="OPEN" className="bg-gray-900">Open</option>
@@ -409,7 +410,7 @@ function DashboardContent() {
                       setSelectedDate('');
                       setFilterStatus('');
                     }}
-                    className="px-4 py-2.5 text-gray-400 hover:text-white hover:bg-gray-800 rounded-xl transition-all flex items-center gap-2"
+                    className="w-full sm:w-auto px-3 sm:px-4 py-2 sm:py-2.5 text-gray-400 hover:text-white hover:bg-gray-800 rounded-xl transition-all flex items-center justify-center gap-2 text-sm"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -420,7 +421,7 @@ function DashboardContent() {
               </div>
               <button
                 onClick={handleAddTrade}
-                className="px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 transform transition-all duration-200 hover:scale-[1.02] flex items-center gap-2"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 transform transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2 text-sm"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -431,23 +432,23 @@ function DashboardContent() {
 
             {/* Trades List */}
             {trades.length === 0 ? (
-              <div className="text-center py-16 bg-gray-900/50 rounded-2xl border border-gray-800">
-                <div className="w-20 h-20 mx-auto mb-4 bg-gray-800 rounded-2xl flex items-center justify-center">
-                  <svg className="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="text-center py-10 sm:py-16 bg-gray-900/50 rounded-2xl border border-gray-800">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 bg-gray-800 rounded-2xl flex items-center justify-center">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">No trades yet</h3>
-                <p className="text-gray-500 mb-6 max-w-sm mx-auto">Start tracking your trades by adding your first entry to see your performance analytics</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">No trades yet</h3>
+                <p className="text-gray-500 mb-6 max-w-sm mx-auto px-4 text-sm sm:text-base">Start tracking your trades by adding your first entry to see your performance analytics</p>
                 <button
                   onClick={handleAddTrade}
-                  className="px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 transition-all duration-200"
+                  className="px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 transition-all duration-200 text-sm sm:text-base"
                 >
                   Add Your First Trade
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {trades.map((trade) => (
                   <TradeCard
                     key={trade.id}

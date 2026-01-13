@@ -36,14 +36,14 @@ export default function StatsCard({ title, value, icon, color = 'default' }: Sta
   const config = colorConfig[color];
 
   return (
-    <div className={`bg-gradient-to-br ${config.bg} backdrop-blur-lg rounded-2xl p-6 border ${config.border} shadow-xl shadow-black/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl`}>
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-gray-400 text-sm font-medium">{title}</span>
-        <div className={`p-2.5 rounded-xl ${config.iconBg}`}>
-          <span className="text-xl">{icon}</span>
+    <div className={`bg-gradient-to-br ${config.bg} backdrop-blur-lg rounded-xl sm:rounded-2xl p-3 sm:p-6 border ${config.border} shadow-xl shadow-black/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl`}>
+      <div className="flex items-center justify-between mb-2 sm:mb-3">
+        <span className="text-gray-400 text-[10px] sm:text-sm font-medium truncate pr-2">{title}</span>
+        <div className={`p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl ${config.iconBg} flex-shrink-0`}>
+          <span className="text-base sm:text-xl">{icon}</span>
         </div>
       </div>
-      <p className={`text-3xl font-bold ${config.text} tracking-tight`}>{value}</p>
+      <p className={`text-xl sm:text-3xl font-bold ${config.text} tracking-tight truncate`}>{value}</p>
     </div>
   );
 }

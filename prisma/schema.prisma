@@ -38,23 +38,24 @@ model OtpCode {
 }
 
 model Trade {
-  id            String   @id @default(cuid())
-  userId        String
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  symbol        String   // Trading symbol (e.g., AAPL, BTC)
-  tradeType     String   // "BUY" or "SELL"
-  entryPrice    Float
-  exitPrice     Float?
-  quantity      Float
-  stopLoss      Float?
-  takeProfit    Float?
-  profitLoss    Float?
-  status        String   @default("OPEN") // "OPEN" or "CLOSED"
-  notes         String?
-  isStarred     Boolean  @default(false) // For best trades archive
-  tradeDate     DateTime
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  symbol         String   // Trading symbol (e.g., AAPL, BTC)
+  tradeType      String   // "BUY" or "SELL"
+  instrumentType String   @default("STOCK") // "STOCK", "FUTURES", "OPTIONS", "INDEX", "FOREX", "CRYPTO", "COMMODITY"
+  entryPrice     Float
+  exitPrice      Float?
+  quantity       Float
+  stopLoss       Float?
+  takeProfit     Float?
+  profitLoss     Float?
+  status         String   @default("OPEN") // "OPEN" or "CLOSED"
+  notes          String?
+  isStarred      Boolean  @default(false) // For best trades archive
+  tradeDate      DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Session {

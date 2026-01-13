@@ -7,6 +7,7 @@ interface Trade {
   id: string;
   symbol: string;
   tradeType: string;
+  instrumentType: string;
   entryPrice: number;
   exitPrice: number | null;
   quantity: number;
@@ -167,13 +168,13 @@ export default function CalendarView({ trades }: CalendarViewProps) {
   return (
     <div className="bg-gray-900/50 rounded-2xl border border-gray-800 overflow-hidden">
       {/* Header */}
-      <div className="p-4 bg-gray-800/50 border-b border-gray-700">
-        <div className="flex items-center justify-between">
+      <div className="p-3 sm:p-4 bg-gray-800/50 border-b border-gray-700">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
           {/* View Mode Toggle */}
-          <div className="flex items-center gap-2 bg-gray-900 rounded-xl p-1">
+          <div className="flex items-center gap-1 sm:gap-2 bg-gray-900 rounded-xl p-1">
             <button
               onClick={() => setViewMode('month')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                 viewMode === 'month'
                   ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25'
                   : 'text-gray-400 hover:text-white hover:bg-gray-800'
@@ -183,7 +184,7 @@ export default function CalendarView({ trades }: CalendarViewProps) {
             </button>
             <button
               onClick={() => setViewMode('year')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                 viewMode === 'year'
                   ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25'
                   : 'text-gray-400 hover:text-white hover:bg-gray-800'
@@ -194,14 +195,14 @@ export default function CalendarView({ trades }: CalendarViewProps) {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             {viewMode === 'year' && (
               <button
                 onClick={goToPrevYear}
-                className="p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
+                className="p-1.5 sm:p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
                 title="Previous Year"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
                 </svg>
               </button>
@@ -209,16 +210,16 @@ export default function CalendarView({ trades }: CalendarViewProps) {
             {viewMode === 'month' && (
               <button
                 onClick={goToPrevMonth}
-                className="p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
+                className="p-1.5 sm:p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
                 title="Previous Month"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
             )}
             
-            <span className="text-white font-semibold min-w-[140px] text-center">
+            <span className="text-white font-semibold min-w-[100px] sm:min-w-[140px] text-center text-xs sm:text-base">
               {viewMode === 'month'
                 ? `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`
                 : currentDate.getFullYear()}
@@ -227,10 +228,10 @@ export default function CalendarView({ trades }: CalendarViewProps) {
             {viewMode === 'month' && (
               <button
                 onClick={goToNextMonth}
-                className="p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
+                className="p-1.5 sm:p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
                 title="Next Month"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -238,10 +239,10 @@ export default function CalendarView({ trades }: CalendarViewProps) {
             {viewMode === 'year' && (
               <button
                 onClick={goToNextYear}
-                className="p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
+                className="p-1.5 sm:p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400 hover:text-white"
                 title="Next Year"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7m-8-14l7 7-7 7" />
                 </svg>
               </button>
@@ -249,17 +250,17 @@ export default function CalendarView({ trades }: CalendarViewProps) {
           </div>
 
           {/* Legend */}
-          <div className="flex items-center gap-4 text-xs">
-            <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded bg-emerald-500"></div>
+          <div className="flex items-center gap-2 sm:gap-4 text-[10px] sm:text-xs">
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded bg-emerald-500"></div>
               <span className="text-gray-400">Profit</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded bg-red-500"></div>
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded bg-red-500"></div>
               <span className="text-gray-400">Loss</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded bg-gray-700"></div>
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded bg-gray-700"></div>
               <span className="text-gray-400">No Trades</span>
             </div>
           </div>
@@ -268,21 +269,21 @@ export default function CalendarView({ trades }: CalendarViewProps) {
 
       {/* Month View */}
       {viewMode === 'month' && (
-        <div className="p-4">
+        <div className="p-2 sm:p-4">
           {/* Day Names Header */}
-          <div className="grid grid-cols-7 gap-2 mb-2">
+          <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-1 sm:mb-2">
             {dayNames.map((day) => (
-              <div key={day} className="text-center text-xs font-medium text-gray-500 py-2">
+              <div key={day} className="text-center text-[10px] sm:text-xs font-medium text-gray-500 py-1 sm:py-2">
                 {day}
               </div>
             ))}
           </div>
 
           {/* Calendar Grid */}
-          <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-7 gap-1 sm:gap-2">
             {/* Empty cells for days before the first day of month */}
             {Array.from({ length: startingDay }).map((_, index) => (
-              <div key={`empty-${index}`} className="h-24 md:h-28" />
+              <div key={`empty-${index}`} className="h-16 sm:h-24 md:h-28" />
             ))}
             
             {/* Days of the month */}
@@ -298,8 +299,8 @@ export default function CalendarView({ trades }: CalendarViewProps) {
                 <div
                   key={day}
                   className={`
-                    h-24 md:h-28 p-2 rounded-xl border transition-all flex flex-col
-                    ${isToday(day) ? 'ring-2 ring-emerald-500 ring-offset-2 ring-offset-gray-900' : ''}
+                    h-[70px] sm:h-24 md:h-28 p-1 sm:p-2 rounded-lg sm:rounded-xl border transition-all flex flex-col overflow-hidden
+                    ${isToday(day) ? 'ring-1 sm:ring-2 ring-emerald-500 ring-offset-1 sm:ring-offset-2 ring-offset-gray-900' : ''}
                     ${hasTrades
                       ? isProfit
                         ? 'bg-emerald-500/20 border-emerald-500/30 hover:bg-emerald-500/30'
@@ -310,16 +311,16 @@ export default function CalendarView({ trades }: CalendarViewProps) {
                     }
                   `}
                 >
-                  <span className={`text-sm font-medium ${isToday(day) ? 'text-emerald-400' : 'text-gray-400'}`}>
+                  <span className={`text-[10px] sm:text-sm font-medium ${isToday(day) ? 'text-emerald-400' : 'text-gray-400'}`}>
                     {day}
                   </span>
                   
                   {hasTrades && (
-                    <div className="mt-auto space-y-1">
-                      <div className={`text-sm font-bold ${isProfit ? 'text-emerald-400' : isLoss ? 'text-red-400' : 'text-gray-400'}`}>
+                    <div className="mt-auto flex flex-col items-start min-w-0">
+                      <div className={`text-[9px] sm:text-sm font-bold leading-tight truncate w-full ${isProfit ? 'text-emerald-400' : isLoss ? 'text-red-400' : 'text-gray-400'}`}>
                         {stats.pnl >= 0 ? '+' : ''}{formatCompactAmount(stats.pnl)}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-[7px] sm:text-xs text-gray-500 leading-tight truncate w-full">
                         {stats.trades} trade{stats.trades !== 1 ? 's' : ''}
                       </div>
                     </div>
@@ -333,8 +334,8 @@ export default function CalendarView({ trades }: CalendarViewProps) {
 
       {/* Year View */}
       {viewMode === 'year' && (
-        <div className="p-4">
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="p-2 sm:p-4">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
             {monthNamesShort.map((monthName, monthIndex) => {
               const stats = monthlyStats[monthIndex];
               const hasTrades = stats && stats.trades > 0;
@@ -349,8 +350,8 @@ export default function CalendarView({ trades }: CalendarViewProps) {
                     setViewMode('month');
                   }}
                   className={`
-                    p-4 rounded-xl border cursor-pointer transition-all
-                    ${isCurrentMonth(monthIndex) ? 'ring-2 ring-emerald-500 ring-offset-2 ring-offset-gray-900' : ''}
+                    p-2 sm:p-4 rounded-lg sm:rounded-xl border cursor-pointer transition-all min-h-[100px] sm:min-h-[130px]
+                    ${isCurrentMonth(monthIndex) ? 'ring-1 sm:ring-2 ring-emerald-500 ring-offset-1 sm:ring-offset-2 ring-offset-gray-900' : ''}
                     ${hasTrades
                       ? isProfit
                         ? 'bg-emerald-500/20 border-emerald-500/30 hover:bg-emerald-500/30'
@@ -361,25 +362,25 @@ export default function CalendarView({ trades }: CalendarViewProps) {
                     }
                   `}
                 >
-                  <div className="text-center">
-                    <span className={`text-lg font-semibold ${isCurrentMonth(monthIndex) ? 'text-emerald-400' : 'text-white'}`}>
+                  <div className="text-center overflow-hidden">
+                    <span className={`text-sm sm:text-lg font-semibold ${isCurrentMonth(monthIndex) ? 'text-emerald-400' : 'text-white'}`}>
                       {monthName}
                     </span>
                     
                     {hasTrades ? (
-                      <div className="mt-3 space-y-1">
-                        <div className={`text-xl font-bold ${isProfit ? 'text-emerald-400' : isLoss ? 'text-red-400' : 'text-gray-400'}`}>
-                          {stats.pnl >= 0 ? '+' : ''}{formatAmount(stats.pnl)}
+                      <div className="mt-1.5 sm:mt-3 flex flex-col items-center min-w-0">
+                        <div className={`text-[10px] sm:text-xl font-bold leading-tight truncate w-full ${isProfit ? 'text-emerald-400' : isLoss ? 'text-red-400' : 'text-gray-400'}`}>
+                          {stats.pnl >= 0 ? '+' : ''}<span className="sm:hidden">{formatCompactAmount(stats.pnl)}</span><span className="hidden sm:inline">{formatAmount(stats.pnl)}</span>
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-[8px] sm:text-xs text-gray-500 leading-tight">
                           {stats.trades} trade{stats.trades !== 1 ? 's' : ''}
                         </div>
-                        <div className="text-xs text-gray-400">
+                        <div className="text-[8px] sm:text-xs text-gray-400 leading-tight">
                           Win: {stats.winRate.toFixed(0)}%
                         </div>
                       </div>
                     ) : (
-                      <div className="mt-3 text-sm text-gray-600">
+                      <div className="mt-1.5 sm:mt-3 text-[9px] sm:text-sm text-gray-600">
                         No trades
                       </div>
                     )}
@@ -392,36 +393,36 @@ export default function CalendarView({ trades }: CalendarViewProps) {
       )}
 
       {/* Summary Stats */}
-      <div className="p-4 bg-gray-800/30 border-t border-gray-700">
-        <div className="grid grid-cols-3 gap-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-white">
+      <div className="p-2 sm:p-4 bg-gray-800/30 border-t border-gray-700">
+        <div className="grid grid-cols-3 gap-1 sm:gap-4">
+          <div className="text-center px-1">
+            <div className="text-base sm:text-2xl font-bold text-white">
               {viewMode === 'month'
                 ? Object.values(dailyStats).reduce((sum, s) => sum + s.trades, 0)
                 : Object.values(monthlyStats).reduce((sum, s) => sum + s.trades, 0)}
             </div>
-            <div className="text-xs text-gray-500 uppercase tracking-wider">
-              Total Trades
+            <div className="text-[8px] sm:text-xs text-gray-500 uppercase tracking-wider leading-tight">
+              Total<br className="sm:hidden" /> Trades
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center px-1">
             {(() => {
               const totalPnl = viewMode === 'month'
                 ? Object.values(dailyStats).reduce((sum, s) => sum + s.pnl, 0)
                 : Object.values(monthlyStats).reduce((sum, s) => sum + s.pnl, 0);
               return (
                 <>
-                  <div className={`text-2xl font-bold ${totalPnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  <div className={`text-base sm:text-2xl font-bold truncate ${totalPnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                     {formatAmount(totalPnl)}
                   </div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wider">
-                    {viewMode === 'month' ? 'Monthly' : 'Yearly'} P&L
+                  <div className="text-[8px] sm:text-xs text-gray-500 uppercase tracking-wider leading-tight">
+                    {viewMode === 'month' ? 'Monthly' : 'Yearly'}<br className="sm:hidden" /> P&L
                   </div>
                 </>
               );
             })()}
           </div>
-          <div className="text-center">
+          <div className="text-center px-1">
             {(() => {
               const relevantTrades = trades.filter((t) => {
                 const td = new Date(t.tradeDate);
@@ -438,11 +439,11 @@ export default function CalendarView({ trades }: CalendarViewProps) {
               
               return (
                 <>
-                  <div className={`text-2xl font-bold ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  <div className={`text-base sm:text-2xl font-bold ${winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}`}>
                     {winRate.toFixed(1)}%
                   </div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wider">
-                    Win Rate
+                  <div className="text-[8px] sm:text-xs text-gray-500 uppercase tracking-wider leading-tight">
+                    Win<br className="sm:hidden" /> Rate
                   </div>
                 </>
               );

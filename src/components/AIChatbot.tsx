@@ -299,7 +299,7 @@ export default function AIChatbot() {
       {/* Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
+        className={`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
           isOpen
             ? 'bg-gray-800 hover:bg-gray-700'
             : 'bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 shadow-emerald-500/30'
@@ -307,11 +307,11 @@ export default function AIChatbot() {
         title={isOpen ? 'Close AI Assistant' : 'Open AI Assistant'}
       >
         {isOpen ? (
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
         )}
@@ -319,23 +319,23 @@ export default function AIChatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] bg-gray-900 rounded-2xl border border-gray-800 shadow-2xl flex flex-col overflow-hidden animate-slideUp">
+        <div className="fixed bottom-20 sm:bottom-24 right-2 sm:right-6 z-50 w-[calc(100vw-1rem)] sm:w-96 sm:max-w-[calc(100vw-3rem)] h-[60vh] sm:h-[500px] max-h-[calc(100vh-6rem)] sm:max-h-[calc(100vh-8rem)] bg-gray-900 rounded-2xl border border-gray-800 shadow-2xl flex flex-col overflow-hidden animate-slideUp">
           {/* Header */}
-          <div className="bg-gray-800/80 backdrop-blur-xl px-4 py-3 border-b border-gray-700 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-gray-800/80 backdrop-blur-xl px-3 sm:px-4 py-2.5 sm:py-3 border-b border-gray-700 flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
               <div>
-                <h3 className="text-white font-semibold text-sm">Trade Ledger Pro AI</h3>
-                <p className="text-xs text-gray-400">Your trading assistant</p>
+                <h3 className="text-white font-semibold text-xs sm:text-sm">Trade Ledger Pro AI</h3>
+                <p className="text-[10px] sm:text-xs text-gray-400">Your trading assistant</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-              <span className="text-xs text-gray-400">Online</span>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <span className="text-[10px] sm:text-xs text-gray-400">Online</span>
             </div>
           </div>
 
@@ -377,19 +377,19 @@ export default function AIChatbot() {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-gray-800 bg-gray-900/80 backdrop-blur-xl shrink-0">
-            <div className="flex items-center gap-2">
+          <div className="p-3 sm:p-4 border-t border-gray-800 bg-gray-900/80 backdrop-blur-xl shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {speechSupported && (
                 <button
                   onClick={handleToggleListening}
-                  className={`p-2.5 rounded-xl transition-all ${
+                  className={`p-2 sm:p-2.5 rounded-xl transition-all ${
                     isListening
                       ? 'bg-red-500 text-white animate-pulse'
                       : 'bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700'
                   }`}
                   title={isListening ? 'Stop listening' : 'Voice input'}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                   </svg>
                 </button>
@@ -400,23 +400,23 @@ export default function AIChatbot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder={isListening ? 'Listening...' : 'Ask me anything about your trades...'}
-                className="flex-1 bg-gray-800 text-white rounded-xl px-4 py-2.5 text-sm placeholder-gray-500 border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                placeholder={isListening ? 'Listening...' : 'Ask about your trades...'}
+                className="flex-1 bg-gray-800 text-white rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm placeholder-gray-500 border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
                 disabled={isLoading || isListening}
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!input.trim() || isLoading}
-                className="p-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded-xl transition-all"
+                className="p-2 sm:p-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded-xl transition-all"
                 title="Send message"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>
             </div>
-            <div className="mt-2 flex items-center justify-center gap-2 text-xs text-gray-500">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="mt-1.5 sm:mt-2 flex items-center justify-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-gray-500">
+              <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               <span>Powered by Gemini AI</span>

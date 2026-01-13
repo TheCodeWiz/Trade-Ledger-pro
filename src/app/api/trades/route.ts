@@ -65,6 +65,7 @@ export async function POST(request: Request) {
     const {
       symbol,
       tradeType,
+      instrumentType,
       entryPrice,
       exitPrice,
       quantity,
@@ -98,6 +99,7 @@ export async function POST(request: Request) {
         userId: session.userId,
         symbol: symbol.toUpperCase(),
         tradeType,
+        instrumentType: instrumentType || 'STOCK',
         entryPrice: parseFloat(entryPrice),
         exitPrice: exitPrice ? parseFloat(exitPrice) : null,
         quantity: parseFloat(quantity),

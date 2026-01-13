@@ -7,6 +7,7 @@ interface Trade {
   id: string;
   symbol: string;
   tradeType: string;
+  instrumentType: string;
   entryPrice: number;
   exitPrice: number | null;
   quantity: number;
@@ -184,16 +185,16 @@ export default function GoalsView({ trades }: GoalsViewProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Monthly Goals Header */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-          <span className="text-2xl">🎯</span>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+        <h3 className="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
+          <span className="text-xl sm:text-2xl">🎯</span>
           {monthNames[currentMonth - 1]} {currentYear} Goals
         </h3>
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl transition-all text-sm font-medium border border-gray-700"
+          className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg sm:rounded-xl transition-all text-xs sm:text-sm font-medium border border-gray-700"
         >
           {isEditing ? 'Cancel' : currentGoal ? 'Edit Goals' : 'Set Goals'}
         </button>
@@ -201,21 +202,21 @@ export default function GoalsView({ trades }: GoalsViewProps) {
 
       {/* Goal Setting Form */}
       {isEditing && (
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700 animate-slideDown">
-          <h4 className="text-white font-medium mb-4">Set Your Monthly Targets</h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-gray-700 animate-slideDown">
+          <h4 className="text-white font-medium mb-3 sm:mb-4 text-sm sm:text-base">Set Your Monthly Targets</h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-3 sm:mb-4">
             <div>
-              <label className="block text-sm text-gray-400 mb-1">Target P&L ({symbol})</label>
+              <label className="block text-xs sm:text-sm text-gray-400 mb-1">Target P&L ({symbol})</label>
               <input
                 type="number"
                 value={formData.targetPnL}
                 onChange={(e) => setFormData({ ...formData, targetPnL: e.target.value })}
                 placeholder="e.g., 10000"
-                className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+                className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm sm:text-base"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-1">Target Win Rate (%)</label>
+              <label className="block text-xs sm:text-sm text-gray-400 mb-1">Target Win Rate (%)</label>
               <input
                 type="number"
                 value={formData.targetWinRate}
@@ -223,24 +224,24 @@ export default function GoalsView({ trades }: GoalsViewProps) {
                 placeholder="e.g., 60"
                 min="0"
                 max="100"
-                className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+                className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm sm:text-base"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-1">Max Trades Per Day</label>
+              <label className="block text-xs sm:text-sm text-gray-400 mb-1">Max Trades Per Day</label>
               <input
                 type="number"
                 value={formData.maxTradesPerDay}
                 onChange={(e) => setFormData({ ...formData, maxTradesPerDay: e.target.value })}
                 placeholder="e.g., 5"
                 min="1"
-                className="w-full px-4 py-2.5 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+                className="w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm sm:text-base"
               />
             </div>
           </div>
           <button
             onClick={handleSaveGoal}
-            className="px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 transition-all"
+            className="px-4 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-lg sm:rounded-xl shadow-lg shadow-emerald-500/25 transition-all text-sm sm:text-base"
           >
             Save Goals
           </button>
@@ -248,12 +249,12 @@ export default function GoalsView({ trades }: GoalsViewProps) {
       )}
 
       {/* Progress Trackers */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
         {/* P&L Progress */}
-        <div className="bg-gray-800/50 rounded-xl p-5 border border-gray-700">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-400">P&L Target</span>
-            <span className={`text-xs px-2 py-0.5 rounded-full ${
+        <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-4 sm:p-5 border border-gray-700">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-xs sm:text-sm text-gray-400">P&L Target</span>
+            <span className={`text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full ${
               pnlProgress >= 100 ? 'bg-emerald-500/20 text-emerald-400' : 
               pnlProgress >= 50 ? 'bg-yellow-500/20 text-yellow-400' : 
               'bg-gray-700 text-gray-400'
@@ -261,7 +262,7 @@ export default function GoalsView({ trades }: GoalsViewProps) {
               {pnlProgress.toFixed(0)}%
             </span>
           </div>
-          <div className="h-3 bg-gray-700 rounded-full overflow-hidden mb-2">
+          <div className="h-2.5 sm:h-3 bg-gray-700 rounded-full overflow-hidden mb-1.5 sm:mb-2">
             <div 
               className={`h-full rounded-full transition-all duration-500 ${
                 monthlyStats.totalPnL >= 0 ? 'bg-emerald-500' : 'bg-red-500'
@@ -269,7 +270,7 @@ export default function GoalsView({ trades }: GoalsViewProps) {
               style={{ width: `${Math.min(100, Math.abs(pnlProgress))}%` }}
             />
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-xs sm:text-sm">
             <span className={monthlyStats.totalPnL >= 0 ? 'text-emerald-400' : 'text-red-400'}>
               {formatAmount(monthlyStats.totalPnL)}
             </span>
@@ -280,10 +281,10 @@ export default function GoalsView({ trades }: GoalsViewProps) {
         </div>
 
         {/* Win Rate Progress */}
-        <div className="bg-gray-800/50 rounded-xl p-5 border border-gray-700">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-400">Win Rate Target</span>
-            <span className={`text-xs px-2 py-0.5 rounded-full ${
+        <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-4 sm:p-5 border border-gray-700">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-xs sm:text-sm text-gray-400">Win Rate Target</span>
+            <span className={`text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full ${
               winRateProgress >= 100 ? 'bg-emerald-500/20 text-emerald-400' : 
               winRateProgress >= 50 ? 'bg-yellow-500/20 text-yellow-400' : 
               'bg-gray-700 text-gray-400'
@@ -291,13 +292,13 @@ export default function GoalsView({ trades }: GoalsViewProps) {
               {winRateProgress.toFixed(0)}%
             </span>
           </div>
-          <div className="h-3 bg-gray-700 rounded-full overflow-hidden mb-2">
+          <div className="h-2.5 sm:h-3 bg-gray-700 rounded-full overflow-hidden mb-1.5 sm:mb-2">
             <div 
               className="h-full bg-blue-500 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(100, winRateProgress)}%` }}
             />
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-xs sm:text-sm">
             <span className="text-blue-400">{monthlyStats.winRate.toFixed(1)}%</span>
             <span className="text-gray-500">
               / {currentGoal?.targetWinRate ? `${currentGoal.targetWinRate}%` : 'Not set'}
@@ -306,19 +307,19 @@ export default function GoalsView({ trades }: GoalsViewProps) {
         </div>
 
         {/* Max Trades Per Day */}
-        <div className="bg-gray-800/50 rounded-xl p-5 border border-gray-700">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-400">Max Trades/Day</span>
-            <span className={`text-xs px-2 py-0.5 rounded-full ${
+        <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-4 sm:p-5 border border-gray-700">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-xs sm:text-sm text-gray-400">Max Trades/Day</span>
+            <span className={`text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full ${
               tradesPerDayStatus ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
             }`}>
               {tradesPerDayStatus ? '✓ On Track' : '⚠ Exceeded'}
             </span>
           </div>
-          <div className="text-3xl font-bold text-white mb-1">
+          <div className="text-2xl sm:text-3xl font-bold text-white mb-0.5 sm:mb-1">
             {monthlyStats.maxTradesInDay}
           </div>
-          <div className="text-sm text-gray-500">
+          <div className="text-xs sm:text-sm text-gray-500">
             Limit: {currentGoal?.maxTradesPerDay || 'Not set'}
           </div>
         </div>
@@ -326,66 +327,66 @@ export default function GoalsView({ trades }: GoalsViewProps) {
 
       {/* Streaks Section */}
       <div>
-        <h4 className="text-md font-semibold text-white mb-4 flex items-center gap-2">
-          <span className="text-xl">🔥</span>
+        <h4 className="text-sm sm:text-md font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2">
+          <span className="text-lg sm:text-xl">🔥</span>
           Streaks & Consistency
         </h4>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 text-center">
-            <div className="text-3xl font-bold text-emerald-400 mb-1">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-emerald-400 mb-0.5 sm:mb-1">
               {monthlyStats.currentWinStreak}
             </div>
-            <div className="text-xs text-gray-400">Current Win Streak</div>
-            <div className="text-xs text-gray-500 mt-1">Best: {monthlyStats.maxWinStreak}</div>
+            <div className="text-[10px] sm:text-xs text-gray-400">Current Win Streak</div>
+            <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">Best: {monthlyStats.maxWinStreak}</div>
           </div>
           
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 text-center">
-            <div className="text-3xl font-bold text-red-400 mb-1">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-red-400 mb-0.5 sm:mb-1">
               {monthlyStats.currentLoseStreak}
             </div>
-            <div className="text-xs text-gray-400">Current Lose Streak</div>
-            <div className="text-xs text-gray-500 mt-1">Worst: {monthlyStats.maxLoseStreak}</div>
+            <div className="text-[10px] sm:text-xs text-gray-400">Current Lose Streak</div>
+            <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">Worst: {monthlyStats.maxLoseStreak}</div>
           </div>
           
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 text-center">
-            <div className="text-3xl font-bold text-emerald-400 mb-1">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-emerald-400 mb-0.5 sm:mb-1">
               {monthlyStats.profitableDays}
             </div>
-            <div className="text-xs text-gray-400">Profitable Days</div>
+            <div className="text-[10px] sm:text-xs text-gray-400">Profitable Days</div>
           </div>
           
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 text-center">
-            <div className="text-3xl font-bold text-red-400 mb-1">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-red-400 mb-0.5 sm:mb-1">
               {monthlyStats.losingDays}
             </div>
-            <div className="text-xs text-gray-400">Losing Days</div>
+            <div className="text-[10px] sm:text-xs text-gray-400">Losing Days</div>
           </div>
         </div>
       </div>
 
       {/* Monthly Summary */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700">
-        <h4 className="text-md font-semibold text-white mb-4">Monthly Summary</h4>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-gray-700">
+        <h4 className="text-sm sm:text-md font-semibold text-white mb-3 sm:mb-4">Monthly Summary</h4>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           <div>
-            <div className="text-2xl font-bold text-white">{monthlyStats.totalTrades}</div>
-            <div className="text-sm text-gray-400">Total Trades</div>
+            <div className="text-xl sm:text-2xl font-bold text-white">{monthlyStats.totalTrades}</div>
+            <div className="text-xs sm:text-sm text-gray-400">Total Trades</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-white">{monthlyStats.closedTrades}</div>
-            <div className="text-sm text-gray-400">Closed Trades</div>
+            <div className="text-xl sm:text-2xl font-bold text-white">{monthlyStats.closedTrades}</div>
+            <div className="text-xs sm:text-sm text-gray-400">Closed Trades</div>
           </div>
           <div>
-            <div className={`text-2xl font-bold ${monthlyStats.totalPnL >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+            <div className={`text-xl sm:text-2xl font-bold ${monthlyStats.totalPnL >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
               {formatAmount(monthlyStats.totalPnL)}
             </div>
-            <div className="text-sm text-gray-400">Total P&L</div>
+            <div className="text-xs sm:text-sm text-gray-400">Total P&L</div>
           </div>
           <div>
-            <div className={`text-2xl font-bold ${monthlyStats.winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}`}>
+            <div className={`text-xl sm:text-2xl font-bold ${monthlyStats.winRate >= 50 ? 'text-emerald-400' : 'text-red-400'}`}>
               {monthlyStats.winRate.toFixed(1)}%
             </div>
-            <div className="text-sm text-gray-400">Win Rate</div>
+            <div className="text-xs sm:text-sm text-gray-400">Win Rate</div>
           </div>
         </div>
       </div>

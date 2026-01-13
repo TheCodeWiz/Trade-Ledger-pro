@@ -7,6 +7,7 @@ interface Trade {
   id: string;
   symbol: string;
   tradeType: string;
+  instrumentType: string;
   entryPrice: number;
   exitPrice: number | null;
   quantity: number;
@@ -203,36 +204,36 @@ export default function LearningCenter({ trades, onToggleStar }: LearningCenterP
   return (
     <div className="space-y-6">
       {/* Tab Navigation */}
-      <div className="flex items-center gap-2 bg-gray-800/50 p-1.5 rounded-xl border border-gray-700 w-fit">
+      <div className="flex items-center gap-1 sm:gap-2 bg-gray-800/50 p-1 sm:p-1.5 rounded-xl border border-gray-700 w-full sm:w-fit overflow-x-auto">
         <button
           onClick={() => setActiveTab('mistakes')}
-          className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+          className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all whitespace-nowrap ${
             activeTab === 'mistakes'
               ? 'bg-emerald-500 text-white'
               : 'text-gray-400 hover:text-white hover:bg-gray-700'
           }`}
         >
-          📝 Mistake Log
+          📝 <span className="hidden sm:inline">Mistake Log</span>
         </button>
         <button
           onClick={() => setActiveTab('bestTrades')}
-          className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+          className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all whitespace-nowrap ${
             activeTab === 'bestTrades'
               ? 'bg-emerald-500 text-white'
               : 'text-gray-400 hover:text-white hover:bg-gray-700'
           }`}
         >
-          ⭐ Best Trades ({starredTrades.length})
+          ⭐ <span className="hidden sm:inline">Best Trades</span> ({starredTrades.length})
         </button>
         <button
           onClick={() => setActiveTab('rules')}
-          className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+          className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-lg transition-all whitespace-nowrap ${
             activeTab === 'rules'
               ? 'bg-emerald-500 text-white'
               : 'text-gray-400 hover:text-white hover:bg-gray-700'
           }`}
         >
-          📋 Trading Rules
+          📋 <span className="hidden sm:inline">Trading Rules</span>
         </button>
       </div>
 

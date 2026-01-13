@@ -77,6 +77,7 @@ export async function PUT(
     const {
       symbol,
       tradeType,
+      instrumentType,
       entryPrice,
       exitPrice,
       quantity,
@@ -107,6 +108,7 @@ export async function PUT(
       data: {
         symbol: symbol ? symbol.toUpperCase() : existingTrade.symbol,
         tradeType: finalTradeType,
+        instrumentType: instrumentType || existingTrade.instrumentType,
         entryPrice: finalEntryPrice,
         exitPrice: finalExitPrice,
         quantity: finalQuantity,

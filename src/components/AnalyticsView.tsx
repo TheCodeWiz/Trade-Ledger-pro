@@ -7,6 +7,7 @@ interface Trade {
   id: string;
   symbol: string;
   tradeType: string;
+  instrumentType: string;
   entryPrice: number;
   exitPrice: number | null;
   quantity: number;
@@ -181,19 +182,19 @@ export default function AnalyticsView({ trades }: AnalyticsViewProps) {
     });
 
     return (
-      <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-        <h4 className="text-sm font-medium text-gray-400 mb-3">{title}</h4>
-        <div className="flex items-center gap-4">
-          <svg viewBox="0 0 100 100" className="w-24 h-24">
+      <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+        <h4 className="text-xs sm:text-sm font-medium text-gray-400 mb-2 sm:mb-3">{title}</h4>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <svg viewBox="0 0 100 100" className="w-16 h-16 sm:w-24 sm:h-24">
             {total > 0 ? paths : (
               <circle cx="50" cy="50" r="40" fill="#374151" />
             )}
           </svg>
-          <div className="flex-1 space-y-1">
+          <div className="flex-1 space-y-0.5 sm:space-y-1">
             {data.map((item, index) => (
-              <div key={index} className="flex items-center gap-2 text-xs">
-                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: item.color }} />
-                <span className="text-gray-400">{item.label}</span>
+              <div key={index} className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs">
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-sm" style={{ backgroundColor: item.color }} />
+                <span className="text-gray-400 truncate">{item.label}</span>
                 <span className="text-white ml-auto">{Math.abs(item.value)}</span>
               </div>
             ))}
@@ -208,19 +209,19 @@ export default function AnalyticsView({ trades }: AnalyticsViewProps) {
     const maxValue = Math.max(...data.map(d => Math.abs(d.value)), 1);
 
     return (
-      <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-        <h4 className="text-sm font-medium text-gray-400 mb-3">{title}</h4>
-        <div className="space-y-2">
+      <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+        <h4 className="text-xs sm:text-sm font-medium text-gray-400 mb-2 sm:mb-3">{title}</h4>
+        <div className="space-y-1.5 sm:space-y-2">
           {data.map((item, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <span className="text-xs text-gray-400 w-12 truncate">{item.label.slice(0, 3)}</span>
-              <div className="flex-1 h-6 bg-gray-700 rounded-lg overflow-hidden">
+            <div key={index} className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-[10px] sm:text-xs text-gray-400 w-8 sm:w-12 truncate">{item.label.slice(0, 3)}</span>
+              <div className="flex-1 h-4 sm:h-6 bg-gray-700 rounded-lg overflow-hidden">
                 <div
                   className={`h-full rounded-lg transition-all ${item.value >= 0 ? 'bg-emerald-500' : 'bg-red-500'}`}
                   style={{ width: `${(Math.abs(item.value) / maxValue) * 100}%` }}
                 />
               </div>
-              <span className={`text-xs font-medium w-8 text-right ${item.value >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+              <span className={`text-[10px] sm:text-xs font-medium w-6 sm:w-8 text-right ${item.value >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                 {item.value}
               </span>
             </div>
@@ -255,70 +256,70 @@ export default function AnalyticsView({ trades }: AnalyticsViewProps) {
   }));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Risk Analysis Section */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <span className="text-2xl">📊</span>
+        <h3 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2">
+          <span className="text-xl sm:text-2xl">📊</span>
           Risk Analysis
         </h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Avg Risk/Reward</div>
-            <div className={`text-2xl font-bold ${riskAnalysis.avgRiskReward >= 1 ? 'text-emerald-400' : 'text-yellow-400'}`}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+            <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 sm:mb-1">Avg Risk/Reward</div>
+            <div className={`text-lg sm:text-2xl font-bold ${riskAnalysis.avgRiskReward >= 1 ? 'text-emerald-400' : 'text-yellow-400'}`}>
               1:{riskAnalysis.avgRiskReward.toFixed(2)}
             </div>
-            <div className="text-xs text-gray-500 mt-1">Target: 1:2+</div>
+            <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">Target: 1:2+</div>
           </div>
           
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Max Drawdown</div>
-            <div className="text-2xl font-bold text-red-400">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+            <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 sm:mb-1">Max Drawdown</div>
+            <div className="text-lg sm:text-2xl font-bold text-red-400">
               {formatAmount(-riskAnalysis.maxDrawdown)}
             </div>
-            <div className="text-xs text-gray-500 mt-1">Peak to trough</div>
+            <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">Peak to trough</div>
           </div>
           
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Sharpe Ratio</div>
-            <div className={`text-2xl font-bold ${riskAnalysis.sharpeRatio >= 1 ? 'text-emerald-400' : riskAnalysis.sharpeRatio >= 0 ? 'text-yellow-400' : 'text-red-400'}`}>
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+            <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 sm:mb-1">Sharpe Ratio</div>
+            <div className={`text-lg sm:text-2xl font-bold ${riskAnalysis.sharpeRatio >= 1 ? 'text-emerald-400' : riskAnalysis.sharpeRatio >= 0 ? 'text-yellow-400' : 'text-red-400'}`}>
               {riskAnalysis.sharpeRatio.toFixed(2)}
             </div>
-            <div className="text-xs text-gray-500 mt-1">Risk-adjusted return</div>
+            <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">Risk-adjusted return</div>
           </div>
           
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Profit Factor</div>
-            <div className={`text-2xl font-bold ${riskAnalysis.profitFactor >= 1.5 ? 'text-emerald-400' : riskAnalysis.profitFactor >= 1 ? 'text-yellow-400' : 'text-red-400'}`}>
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+            <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 sm:mb-1">Profit Factor</div>
+            <div className={`text-lg sm:text-2xl font-bold ${riskAnalysis.profitFactor >= 1.5 ? 'text-emerald-400' : riskAnalysis.profitFactor >= 1 ? 'text-yellow-400' : 'text-red-400'}`}>
               {riskAnalysis.profitFactor === Infinity ? '∞' : riskAnalysis.profitFactor.toFixed(2)}
             </div>
-            <div className="text-xs text-gray-500 mt-1">Gross profit / loss</div>
+            <div className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">Gross profit / loss</div>
           </div>
         </div>
 
         {/* Additional Risk Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Average Win</div>
-            <div className="text-xl font-bold text-emerald-400">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mt-2 sm:mt-4">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+            <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 sm:mb-1">Average Win</div>
+            <div className="text-base sm:text-xl font-bold text-emerald-400">
               {formatAmount(riskAnalysis.avgWin)}
             </div>
           </div>
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Average Loss</div>
-            <div className="text-xl font-bold text-red-400">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+            <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 sm:mb-1">Average Loss</div>
+            <div className="text-base sm:text-xl font-bold text-red-400">
               {formatAmount(riskAnalysis.avgLoss)}
             </div>
           </div>
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Largest Win</div>
-            <div className="text-xl font-bold text-emerald-400">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+            <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 sm:mb-1">Largest Win</div>
+            <div className="text-base sm:text-xl font-bold text-emerald-400">
               {formatAmount(riskAnalysis.largestWin)}
             </div>
           </div>
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <div className="text-xs text-gray-400 mb-1">Largest Loss</div>
-            <div className="text-xl font-bold text-red-400">
+          <div className="bg-gray-800/50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-gray-700">
+            <div className="text-[10px] sm:text-xs text-gray-400 mb-0.5 sm:mb-1">Largest Loss</div>
+            <div className="text-base sm:text-xl font-bold text-red-400">
               {formatAmount(riskAnalysis.largestLoss)}
             </div>
           </div>
@@ -327,35 +328,35 @@ export default function AnalyticsView({ trades }: AnalyticsViewProps) {
 
       {/* Trade Distribution Section */}
       <div>
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <span className="text-2xl">📈</span>
+        <h3 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 flex items-center gap-2">
+          <span className="text-xl sm:text-2xl">📈</span>
           Trade Distribution
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 mb-2 sm:mb-4">
           <PieChart data={symbolData.length > 0 ? symbolData : [{ label: 'No Data', value: 1, color: '#374151' }]} title="By Symbol (Top 5)" />
           <PieChart data={typeData} title="By Trade Type" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
           <BarChart data={dayData} title="Trades by Day of Week" />
           <BarChart data={dayPnLData} title="P&L by Day of Week" />
         </div>
       </div>
 
       {/* Symbol Performance Table */}
-      <div className="bg-gray-800/50 rounded-xl border border-gray-700 overflow-hidden">
-        <div className="p-4 border-b border-gray-700">
-          <h4 className="text-sm font-medium text-white">Symbol Performance</h4>
+      <div className="bg-gray-800/50 rounded-lg sm:rounded-xl border border-gray-700 overflow-hidden">
+        <div className="p-3 sm:p-4 border-b border-gray-700">
+          <h4 className="text-xs sm:text-sm font-medium text-white">Symbol Performance</h4>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-900/50">
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">Symbol</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-400">Trades</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-400">P&L</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-400">Avg P&L</th>
+                <th className="px-3 sm:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-medium text-gray-400">Symbol</th>
+                <th className="px-3 sm:px-4 py-2 sm:py-3 text-right text-[10px] sm:text-xs font-medium text-gray-400">Trades</th>
+                <th className="px-3 sm:px-4 py-2 sm:py-3 text-right text-[10px] sm:text-xs font-medium text-gray-400">P&L</th>
+                <th className="px-3 sm:px-4 py-2 sm:py-3 text-right text-[10px] sm:text-xs font-medium text-gray-400">Avg P&L</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700">
@@ -363,19 +364,19 @@ export default function AnalyticsView({ trades }: AnalyticsViewProps) {
                 .sort((a, b) => b[1].pnl - a[1].pnl)
                 .map(([symbol, data]) => (
                   <tr key={symbol} className="hover:bg-gray-800/50">
-                    <td className="px-4 py-3 text-sm text-white font-medium">{symbol}</td>
-                    <td className="px-4 py-3 text-sm text-gray-300 text-right">{data.count}</td>
-                    <td className={`px-4 py-3 text-sm font-medium text-right ${data.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                    <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-white font-medium">{symbol}</td>
+                    <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-gray-300 text-right">{data.count}</td>
+                    <td className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium text-right ${data.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                       {formatAmount(data.pnl)}
                     </td>
-                    <td className={`px-4 py-3 text-sm text-right ${(data.pnl / data.count) >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                    <td className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-right ${(data.pnl / data.count) >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                       {formatAmount(data.pnl / data.count)}
                     </td>
                   </tr>
                 ))}
               {Object.keys(distribution.bySymbol).length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={4} className="px-3 sm:px-4 py-6 sm:py-8 text-center text-gray-500 text-xs sm:text-sm">
                     No closed trades yet
                   </td>
                 </tr>
