@@ -9,6 +9,7 @@ interface Trade {
   id: string;
   symbol: string;
   tradeType: string;
+  instrumentType?: string;
   entryPrice: number;
   exitPrice: number | null;
   quantity: number;
@@ -138,6 +139,7 @@ function formatTradesForContext(trades: Trade[]) {
   return trades.map(t => ({
     symbol: t.symbol,
     type: t.tradeType,
+    instrumentType: t.instrumentType || 'STOCK',
     entryPrice: t.entryPrice,
     exitPrice: t.exitPrice,
     quantity: t.quantity,
