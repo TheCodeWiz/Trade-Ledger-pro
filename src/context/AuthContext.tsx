@@ -81,7 +81,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     setUser(data.user);
-    router.push('/dashboard');
+    // Use replace to prevent back navigation to login after authentication
+    router.replace('/dashboard');
   };
 
   const resendOtp = async (userId: string, otpMethod: string) => {
@@ -115,7 +116,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
     setUser(null);
-    router.push('/login');
+    // Clear browser history to prevent forward navigation back to protected pages
+    window.history.replaceState(null, '', '/login');
+    router.replace('/login');
   };
 
   return (

@@ -12,6 +12,7 @@ import AnalyticsView from '@/components/AnalyticsView';
 import GoalsView from '@/components/GoalsView';
 import LearningCenter from '@/components/LearningCenter';
 import NotificationsView from '@/components/NotificationsView';
+import NewsView from '@/components/NewsView';
 import AIChatbot from '@/components/AIChatbot';
 import { CurrencyProvider, useCurrency } from '@/context/CurrencyContext';
 
@@ -39,7 +40,7 @@ interface User {
   email: string;
 }
 
-type TabType = 'dashboard' | 'calendar' | 'analytics' | 'goals' | 'learning' | 'notifications';
+type TabType = 'dashboard' | 'calendar' | 'analytics' | 'goals' | 'learning' | 'notifications' | 'news';
 
 function DashboardContent() {
   const [user, setUser] = useState<User | null>(null);
@@ -55,6 +56,7 @@ function DashboardContent() {
     isOpen: false,
     tradeId: null,
   });
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const router = useRouter();
   const { formatAmount } = useCurrency();
 
@@ -135,7 +137,41 @@ function DashboardContent() {
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/login');
+    // Clear browser history to prevent forward navigation back to dashboard
+    // Replace current history entry with login page
+    window.history.replaceState(null, '', '/login');
+    // Use replace instead of push to prevent back navigation to dashboard
+    router.replace('/login');
+  };
+
+  // Handle browser back button press
+  useEffect(() => {
+    if (!user) return;
+
+    // Push a state to detect back button press
+    window.history.pushState({ page: 'dashboard' }, '', window.location.href);
+
+    const handlePopState = (event: PopStateEvent) => {
+      // User pressed back button, show logout confirmation
+      // Push state again to prevent actual navigation
+      window.history.pushState({ page: 'dashboard' }, '', window.location.href);
+      setShowLogoutConfirm(true);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [user]);
+
+  const handleLogoutConfirm = async () => {
+    setShowLogoutConfirm(false);
+    await handleLogout();
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutConfirm(false);
   };
 
   const handleAddTrade = () => {
@@ -346,6 +382,21 @@ function DashboardContent() {
                 <span className="hidden sm:inline">Notifications</span>
               </span>
             </button>
+            <button
+              onClick={() => setActiveTab('news')}
+              className={`px-2.5 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all border-b-2 whitespace-nowrap ${
+                activeTab === 'news'
+                  ? 'text-emerald-400 border-emerald-400'
+                  : 'text-gray-400 border-transparent hover:text-white hover:border-gray-600'
+              }`}
+            >
+              <span className="flex items-center gap-1.5 sm:gap-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+                <span className="hidden sm:inline">News</span>
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -489,6 +540,11 @@ function DashboardContent() {
         {activeTab === 'notifications' && (
           <NotificationsView userEmail={user?.email || ''} />
         )}
+
+        {/* News Tab Content */}
+        {activeTab === 'news' && (
+          <NewsView />
+        )}
       </main>
 
       {/* Trade Modal */}
@@ -509,6 +565,18 @@ function DashboardContent() {
         variant="danger"
         onConfirm={confirmDelete}
         onCancel={() => setDeleteConfirm({ isOpen: false, tradeId: null })}
+      />
+
+      {/* Logout Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showLogoutConfirm}
+        title="Logout"
+        message="Are you sure you want to logout? You will need to enter your credentials and verify OTP again to access the dashboard."
+        confirmText="Logout"
+        cancelText="Cancel"
+        variant="warning"
+        onConfirm={handleLogoutConfirm}
+        onCancel={handleLogoutCancel}
       />
 
       {/* AI Chatbot */}

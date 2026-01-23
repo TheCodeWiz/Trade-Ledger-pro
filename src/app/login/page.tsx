@@ -21,6 +21,12 @@ export default function LoginPage() {
   const router = useRouter();
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
+  // Clear browser history to prevent forward navigation to protected pages
+  useEffect(() => {
+    // Replace current history state to prevent forward navigation to dashboard
+    window.history.replaceState(null, '', '/login');
+  }, []);
+
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (step === 'otp' && timeLeft > 0) {
@@ -137,7 +143,8 @@ export default function LoginPage() {
         throw new Error(data.error || 'OTP verification failed');
       }
 
-      router.push('/dashboard');
+      // Use replace to prevent back navigation to login after successful authentication
+      router.replace('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'OTP verification failed');
       setOtp(['', '', '', '', '', '']);
